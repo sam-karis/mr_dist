@@ -1,0 +1,34 @@
+
+syntax = "proto3";
+
+package wordcount;
+
+service WordCount {
+    // Obtains the task to execute
+    rpc GetTask(TaskRequest) returns (TaskResponse) {}
+
+}
+
+enum TaskType {
+    map = 0;
+    reduce = 1;
+    done = 2;
+}
+
+message Task {
+    TaskType task_type = 1;
+    int32 task_number = 2;
+    int32 number_map_tasks = 3;
+    int32 number_reduce_tasks = 4;
+    map<string, string> bucket_ref = 5;
+}
+
+message TaskRequest {
+    string message = 1;
+    repeated string available_buckets = 2;
+}
+
+message TaskResponse {
+    Task task = 1;
+    string message = 2;
+}
